@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	port := ":9999"
+	port := ":8080"
 
 	http.HandleFunc("/", hello)
 	http.HandleFunc("/greet", greet)
