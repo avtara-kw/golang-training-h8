@@ -11,7 +11,7 @@ import (
 
 const (
 	DB_HOST = "localhost"
-	DB_POST = "5432"
+	DB_PORT = "5432"
 	DB_USER = "docker"
 	DB_PASS = "docker"
 	DB_NAME = "docker"
