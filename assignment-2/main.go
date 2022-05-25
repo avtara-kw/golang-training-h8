@@ -2,28 +2,31 @@ package main
 
 import (
 	"assignment-2/app/config"
+	"assignment-2/controllers"
+	"assignment-2/repositories"
+	"assignment-2/services"
 	"log"
 
 	"github.com/gin-gonic/gin"
 )
 
 const (
-	DB_HOST  = "localhost"
-	DB_PORT  = "5432"
-	DB_USER  = "docker"
-	DB_PASS  = "docker"
-	DB_NAME  = "docker"
-	APP_PORT = ":8888"
+	AppPort = ":8888"
 )
 
 func main() {
-	_, err := config.ConnectDB()
+	db, err := config.ConnectDB()
 	if err != nil {
 		panic(err)
 	}
 
 	router := gin.Default()
+	orderRepo := repositories.NewOrderRepo(db)
+	orderService := services.NewOrderService(orderRepo)
+	orderController := controllers.NewOrderController(orderService)
+	router.POST("/orders", orderController.CreateNewOrder)
+	router.GET("/orders", orderController.GetAllOrder)
 
-	log.Println("server running at port ", APP_PORT)
-	router.Run(APP_PORT)
+	log.Println("server running at port ", AppPort)
+	router.Run(AppPort)
 }

@@ -10,14 +10,14 @@ import (
 
 const (
 	DB_HOST = "localhost"
-	DB_POST = "5432"
-	DB_USER = "docker"
-	DB_PASS = "docker"
-	DB_NAME = "docker"
+	DB_PORT = "55000"
+	DB_USER = "postgres"
+	DB_PASS = "postgrespw"
+	DB_NAME = "postgres"
 )
 
 func ConnectDB() (*sql.DB, error) {
-	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", DB_HOST, DB_POST, DB_USER, DB_PASS, DB_NAME)
+	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME)
 
 	db, err := sql.Open("postgres", dsn)
 	if err != nil {

@@ -1,19 +1,18 @@
 package models
 
-import "gorm.io/gorm"
+import "time"
 
-type Orders struct {
-	gorm.Model
-	OrderID      int `gorm:"primary_key"`
+type Order struct {
+	OrderID      int
 	CustomerName string
-	Items        []Items `gorm:"ForeignKey:OrderID"`
+	OrderedAt    *time.Time
+	Items        []Item
 }
 
-type Items struct {
-	gorm.Model
-	ItemID      int `gorm:"primary_key"`
-	ItemCode    int
+type Item struct {
+	ItemID      int
+	ItemCode    string
 	Description string
 	Quantity    int
-	Order_id    int
+	OrderID     int
 }
