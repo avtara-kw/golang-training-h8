@@ -26,6 +26,7 @@ func main() {
 	orderController := controllers.NewOrderController(orderService)
 	router.POST("/orders", orderController.CreateNewOrder)
 	router.GET("/orders", orderController.GetAllOrder)
+	router.DELETE("/orders/:id", orderController.DeleteOrder)
 
 	log.Println("server running at port ", AppPort)
 	router.Run(AppPort)

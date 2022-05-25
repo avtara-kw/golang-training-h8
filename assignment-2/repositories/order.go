@@ -3,13 +3,13 @@ package repositories
 import (
 	"assignment-2/models"
 	"database/sql"
-	"fmt"
 )
 
 type OrderRepo interface {
 	CreateItem(item *models.Item) error
 	CreateOrder(name, order_at string) (*models.Order, error)
 	GetAllOrder() ([]models.Order, error)
+	DeleteOrder(ID int) error
 }
 
 type orderRepo struct {
@@ -32,10 +32,8 @@ VALUES ($1, $2, $3, $4) Returning *
 		Scan(&item.ItemID, &item.ItemCode, &item.Description, &item.Quantity, &item.OrderID)
 
 	if err != nil {
-		fmt.Println(err)
 		return err
 	}
-	fmt.Println(item)
 	return nil
 }
 
@@ -62,10 +60,8 @@ VALUES ($1, $2) Returning *;
 	}
 
 	if err != nil {
-		fmt.Println(err)
 		return nil, err
 	}
-	fmt.Println(order)
 	return &order, nil
 }
 
@@ -109,4 +105,18 @@ func (p *orderRepo) GetAllOrder() ([]models.Order, error) {
 	}
 
 	return result, nil
+}
+
+func (p *orderRepo) DeleteOrder(ID int) error {
+	sqlQuery := `DELETE FROM items where order_id = $1;`
+	_, err := p.db.Exec(sqlQuery, ID)
+	if err != nil {
+		return err
+	}
+	sqlQueryOrder := `DELETE FROM orders where order_id = $1;`
+	_, err = p.db.Exec(sqlQueryOrder, ID)
+	if err != nil {
+		return err
+	}
+	return nil
 }

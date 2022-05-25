@@ -70,3 +70,22 @@ func (p *OrderService) GetAllOrder() *params.Response {
 		Payload: order,
 	}
 }
+
+func (p *OrderService) DeleteOrder(ID int) *params.Response {
+	var err error
+
+	err = p.orderRepo.DeleteOrder(ID)
+	if err != nil {
+		return &params.Response{
+			Status:         400,
+			Error:          "BAD REQUEST",
+			AdditionalInfo: err.Error(),
+		}
+	}
+
+	return &params.Response{
+		Status:  200,
+		Message: "DELETE DATA SUCCESS",
+		Payload: map[string]int{"OrderID": ID},
+	}
+}

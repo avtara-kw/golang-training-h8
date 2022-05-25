@@ -4,6 +4,7 @@ import (
 	"assignment-2/params"
 	"assignment-2/services"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -37,5 +38,12 @@ func (p *OrderController) CreateNewOrder(c *gin.Context) {
 
 func (p *OrderController) GetAllOrder(c *gin.Context) {
 	response := p.orderService.GetAllOrder()
+	c.JSON(response.Status, response)
+}
+
+func (p *OrderController) DeleteOrder(c *gin.Context) {
+	ID := c.Params.ByName("id")
+	intVar, _ := strconv.Atoi(ID)
+	response := p.orderService.DeleteOrder(intVar)
 	c.JSON(response.Status, response)
 }
