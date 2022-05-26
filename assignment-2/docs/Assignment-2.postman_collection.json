@@ -1,0 +1,101 @@
+{
+	"info": {
+		"_postman_id": "20b0e10d-f3b2-4418-9b6c-f5302a5d2433",
+		"name": "Assignment-2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "New Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"customer_name\": \"Muhammad Avtara Khrisna\",\n    \"items\": [\n        {\n           \"item_code\": \"939\",\n           \"description\" : \"Iphone 11 White\",\n           \"quantity\": 10\n        },\n        {\n           \"item_code\": \"940\",\n           \"description\" : \"Iphone 11 Black\",\n           \"quantity\": 6\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8888/orders",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8888/orders",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Order",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8888/orders/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"orders",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Order",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"customer_name\": \"Muhammad Avtara Khrisna\",\n    \"items\": [\n        {\n                    \"ItemID\": 7,\n                    \"ItemCode\": \"939\",\n                    \"Description\": \"Iphone 11 White\",\n                    \"Quantity\": 10\n                }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8888/orders/12",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"orders",
+						"12"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
