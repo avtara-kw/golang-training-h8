@@ -27,6 +27,7 @@ func main() {
 	router.POST("/orders", orderController.CreateNewOrder)
 	router.GET("/orders", orderController.GetAllOrder)
 	router.DELETE("/orders/:id", orderController.DeleteOrder)
+	router.PUT("/orders/:id", orderController.UpdateOrder)
 
 	log.Println("server running at port ", AppPort)
 	router.Run(AppPort)

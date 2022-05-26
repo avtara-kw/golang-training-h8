@@ -20,7 +20,7 @@ func NewOrderController(service *services.OrderService) *OrderController {
 }
 
 func (p *OrderController) CreateNewOrder(c *gin.Context) {
-	var req params.Order
+	var req params.CreateOrder
 
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
@@ -45,5 +45,24 @@ func (p *OrderController) DeleteOrder(c *gin.Context) {
 	ID := c.Params.ByName("id")
 	intVar, _ := strconv.Atoi(ID)
 	response := p.orderService.DeleteOrder(intVar)
+	c.JSON(response.Status, response)
+}
+
+func (p *OrderController) UpdateOrder(c *gin.Context) {
+	var req params.UpdateOrder
+	ID := c.Params.ByName("id")
+	intVar, _ := strconv.Atoi(ID)
+
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, params.Response{
+			Status:         http.StatusBadRequest,
+			Error:          "BAD REQUEST",
+			AdditionalInfo: err,
+		})
+		return
+	}
+
+	response := p.orderService.UpdateOrder(req, intVar)
 	c.JSON(response.Status, response)
 }

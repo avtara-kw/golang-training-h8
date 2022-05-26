@@ -10,6 +10,8 @@ type OrderRepo interface {
 	CreateOrder(name, order_at string) (*models.Order, error)
 	GetAllOrder() ([]models.Order, error)
 	DeleteOrder(ID int) error
+	UpdateOrder(name, orderAt string, ID int) error
+	UpdateItem(data *models.Item, ID int) error
 }
 
 type orderRepo struct {
@@ -115,6 +117,35 @@ func (p *orderRepo) DeleteOrder(ID int) error {
 	}
 	sqlQueryOrder := `DELETE FROM orders where order_id = $1;`
 	_, err = p.db.Exec(sqlQueryOrder, ID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (p *orderRepo) UpdateOrder(name, orderAt string, ID int) error {
+	var (
+		err error
+	)
+
+	sqlStatementNoOrderDate := `UPDATE orders SET customer_name = $2 WHERE order_id = $1;;`
+	sqlstatementWithOrderDate := `UPDATE orders SET customer_name = $2 , ordered_at = $3 WHERE order_id = $1;`
+
+	if orderAt != "" {
+		_, err = p.db.Exec(sqlstatementWithOrderDate, ID, name, orderAt)
+	} else {
+		_, err = p.db.Exec(sqlStatementNoOrderDate, ID, name)
+	}
+
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (p *orderRepo) UpdateItem(data *models.Item, ID int) error {
+	sqlQuery := `UPDATE items SET item_code = $3 , description = $4, quantity = $5 WHERE order_id = $1 AND item_id = $2;`
+	_, err := p.db.Exec(sqlQuery, ID, data.ItemID, data.ItemCode, data.Description, data.Quantity)
 	if err != nil {
 		return err
 	}
